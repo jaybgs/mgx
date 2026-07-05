@@ -34,10 +34,53 @@ export default function NibgateTemplateBridge({ resource, accessPath, source }: 
       },
     })
 
-    return () => {
-      void controller
-    }
-  }, [resource, accessPath, source])
+      const ensureArcChain = async (e: Event) => {
+        const evm = (window as any).ethereum;
+        if (!evm) return;
+        const chainId = await evm.request({ method: 'eth_chainId' });
+        if (chainId !== '0x4cef52') {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          try {
+            await evm.request({
+              method: 'wallet_switchEthereumChain',
+              params: [{ chainId: '0x4cef52' }],
+            });
+            (e.target as HTMLElement).click();
+          } catch (switchError: any) {
+            if (switchError.code === 4902) {
+              try {
+                await evm.request({
+                  method: 'wallet_addEthereumChain',
+                  params: [{
+                    chainId: '0x4cef52',
+                    chainName: 'ARC Testnet',
+                    rpcUrls: ['https://rpc-testnet.arc.tech'],
+                    nativeCurrency: { name: 'ARC', symbol: 'ARC', decimals: 18 },
+                  }],
+                });
+                (e.target as HTMLElement).click();
+              } catch (addError) {
+                console.error('Failed to add ARC Testnet', addError);
+              }
+            } else {
+              console.error('Failed to switch to ARC Testnet', switchError);
+            }
+          }
+        }
+      };
+
+      const connectBtn = document.querySelector('[data-nibgate-connect]');
+      const unlockBtn = document.querySelector('[data-nibgate-unlock]');
+      if (connectBtn) connectBtn.addEventListener('click', ensureArcChain, { capture: true });
+      if (unlockBtn) unlockBtn.addEventListener('click', ensureArcChain, { capture: true });
+
+      return () => {
+        if (connectBtn) connectBtn.removeEventListener('click', ensureArcChain, { capture: true });
+        if (unlockBtn) unlockBtn.removeEventListener('click', ensureArcChain, { capture: true });
+        void controller;
+      };
+  }, [resource, accessPath, source]);
 
   return (
     <section className="nibgate-unlock-card" data-nibgate-resource data-nibgate-id={resource.id} data-nibgate-title={resource.title} data-nibgate-type={resource.type} data-nibgate-price={resource.price} data-nibgate-path={resource.path}>
