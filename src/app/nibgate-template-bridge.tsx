@@ -34,46 +34,61 @@ export default function NibgateTemplateBridge({ resource, accessPath, source }: 
       },
     })
 
-      const ensureArcChain = async (e: Event) => {
-        const evm = (window as any).ethereum;
-        if (!evm) return;
-        const chainId = await evm.request({ method: 'eth_chainId' });
-        if (chainId !== '0x4cef52') {
-          e.stopImmediatePropagation();
-          e.preventDefault();
+      const ensureArcChain = (e: any) => {
+        if (e.detail === 'auto-dispatch') return;
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        
+        const target = e.currentTarget;
+        (async () => {
           try {
-            await evm.request({
-              method: 'wallet_switchEthereumChain',
-              params: [{ chainId: '0x4cef52' }],
-            });
-            (e.target as HTMLElement).click();
-          } catch (switchError: any) {
-            if (switchError.code === 4902) {
+            const chainId = await (window as any).ethereum.request({ method: 'eth_chainId' });
+            if (chainId !== '0x4cef52') {
               try {
-                await evm.request({
-                  method: 'wallet_addEthereumChain',
-                  params: [{
-                    chainId: '0x4cef52',
-                    chainName: 'ARC Testnet',
-                    rpcUrls: ['https://rpc-testnet.arc.tech'],
-                    nativeCurrency: { name: 'ARC', symbol: 'ARC', decimals: 18 },
-                  }],
+                await (window as any).ethereum.request({
+                  method: 'wallet_switchEthereumChain',
+                  params: [{ chainId: '0x4cef52' }],
                 });
-                (e.target as HTMLElement).click();
-              } catch (addError) {
-                console.error('Failed to add ARC Testnet', addError);
+              } catch (switchError: any) {
+                if (switchError.code === 4902) {
+                  await (window as any).ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [{
+                      chainId: '0x4cef52',
+                      chainName: 'ARC Testnet',
+                      rpcUrls: ['https://rpc-testnet.arc.tech'],
+                      nativeCurrency: { name: 'ARC', symbol: 'ARC', decimals: 18 },
+                    }],
+                  });
+                } else {
+                  console.error('Failed to switch to ARC Testnet', switchError);
+                  return;
+                }
               }
-            } else {
-              console.error('Failed to switch to ARC Testnet', switchError);
             }
+            const syntheticEvent = new MouseEvent('click', { bubbles: true, cancelable: true });
+            (syntheticEvent as any).detail = 'auto-dispatch';
+            target.dispatchEvent(syntheticEvent);
+          } catch (err) {
+            console.error('Chain validation failed', err);
           }
-        }
+        })();
       };
 
       const connectBtn = document.querySelector('[data-nibgate-connect]');
       const unlockBtn = document.querySelector('[data-nibgate-unlock]');
-      if (connectBtn) connectBtn.addEventListener('click', ensureArcChain, { capture: true });
-      if (unlockBtn) unlockBtn.addEventListener('click', ensureArcChain, { capture: true });
+
+      if (!(window as any).ethereum) {
+        if (connectBtn) {
+          connectBtn.addEventListener('click', (e) => {
+            alert('No wallet extension found! Please install MetaMask or another EVM wallet to connect.');
+            e.stopPropagation();
+          }, { capture: true });
+        }
+      } else {
+        if (connectBtn) connectBtn.addEventListener('click', ensureArcChain, { capture: true });
+        if (unlockBtn) unlockBtn.addEventListener('click', ensureArcChain, { capture: true });
+      }
 
       return () => {
         if (connectBtn) connectBtn.removeEventListener('click', ensureArcChain, { capture: true });
