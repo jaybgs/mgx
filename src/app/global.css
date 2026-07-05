@@ -1,0 +1,317 @@
+@font-face {
+  font-family: 'ABC Favorit';
+  src: url('/fonts/ABCFavorit-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'ABC Favorit';
+  src: url('/fonts/ABCFavorit-Bold.woff2') format('woff2');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Kumbh Sans';
+  src: url('/fonts/kumbh/KumbhSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Kumbh Sans';
+  src: url('/fonts/kumbh/KumbhSans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+}
+
+:root {
+  --font-ui: 'Kumbh Sans', 'ABC Favorit', Arial, sans-serif;
+  --font-display: 'Kumbh Sans', 'ABC Favorit', Arial, sans-serif;
+  --nib-page-bg: #f4f4f0;
+  --nib-page-fg: #0a0a0a;
+  --nib-page-muted: #44423d;
+  --nib-surface: #ffffff;
+  --nib-surface-raised: #ffffff;
+  --nib-soft: #e7efe4;
+  --nib-olive: #7c9a6d;
+  --nib-border-soft: #11111124;
+  --nib-header-bg: #10110e;
+  --nib-title-letter-spacing: -0.055em;
+  --nib-title-line-height: 0.92;
+  --nib-radius-action: 6px;
+  --nib-radius-card: 8px;
+  --nib-shadow-1: 0 1px 2px #1111110f;
+  --nib-shadow-2: 0 12px 32px #11111114;
+  background: var(--nib-header-bg);
+  color: var(--nib-page-fg);
+  font-family: var(--font-ui);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--nib-header-bg);
+  color: var(--nib-page-fg);
+  font-family: var(--font-ui);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body { overflow-x: hidden; }
+
+.nibgate-demo-main {
+  min-height: 100vh;
+  background: var(--nib-page-bg);
+  color: var(--nib-page-fg);
+  padding: 52px 0 96px;
+}
+
+.nibgate-demo-main > * {
+  width: min(100% - 60px, 1380px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  max-width: 980px;
+  margin: 0 0 20px;
+  color: var(--nib-page-fg);
+  font-family: var(--font-display);
+  font-size: clamp(48px, 11vw, 64px);
+  font-weight: 500;
+  letter-spacing: var(--nib-title-letter-spacing);
+  line-height: var(--nib-title-line-height);
+}
+
+p {
+  max-width: 680px;
+  margin: 0 0 28px;
+  color: var(--nib-page-muted);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+a { color: inherit; }
+
+.nibgate-unlock-card {
+  max-width: 900px;
+  margin-top: 50px;
+  border: 1px solid var(--nib-border-soft);
+  border-radius: var(--nib-radius-card);
+  background: var(--nib-surface);
+  box-shadow: var(--nib-shadow-1);
+  padding: 30px;
+}
+
+.nibgate-card-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+  color: var(--nib-page-muted);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.nibgate-unlock-card h2 {
+  max-width: 760px;
+  margin: 0 0 20px;
+  color: var(--nib-page-fg);
+  font-family: var(--font-display);
+  font-size: clamp(36px, 7vw, 56px);
+  font-weight: 500;
+  letter-spacing: var(--nib-title-letter-spacing);
+  line-height: var(--nib-title-line-height);
+}
+
+.nibgate-unlock-card p {
+  max-width: 720px;
+  margin: 0 0 24px;
+}
+
+.nibgate-wallet-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 28px 0 0;
+  border: 1px solid var(--nib-border-soft);
+  border-radius: var(--nib-radius-card);
+  background: var(--nib-surface-raised);
+  padding: 16px;
+}
+
+.nibgate-wallet-row span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--nib-page-muted);
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.nibgate-wallet-row strong {
+  color: var(--nib-page-fg);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.nibgate-wallet-button {
+  flex: 0 0 auto;
+  min-height: 44px;
+  cursor: pointer;
+  border: 1px solid var(--nib-border-soft);
+  border-radius: var(--nib-radius-action);
+  background: var(--nib-soft);
+  color: var(--nib-page-fg);
+  padding: 10px 18px;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+
+.nibgate-wallet-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.nibgate-wallet-button-secondary {
+  background: transparent;
+}
+
+.nibgate-wallet-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.nibgate-wallet-button:hover:not(:disabled),
+.nibgate-wallet-button:focus-visible:not(:disabled) {
+  background: var(--nib-olive);
+  border-color: rgba(17, 17, 17, 0.18);
+}
+
+.nibgate-locked-preview {
+  display: grid;
+  gap: 10px;
+  margin: 30px 0;
+  border: 1px solid var(--nib-border-soft);
+  border-radius: var(--nib-radius-card);
+  background: var(--nib-soft);
+  padding: 22px;
+}
+
+.nibgate-locked-preview span {
+  display: block;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.18);
+}
+
+.nibgate-locked-preview span:first-child { width: 100%; }
+.nibgate-locked-preview span:nth-child(2) { width: 76%; }
+.nibgate-locked-preview span:nth-child(3) { width: 52%; }
+
+.nibgate-unlock-button {
+  width: 100%;
+  min-height: 54px;
+  cursor: pointer;
+  border-radius: var(--nib-radius-action);
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 500;
+  transition: background-color 0.18s, color 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+
+.nibgate-unlock-button {
+  border: 1px solid rgba(124, 154, 109, 0.62);
+  background: #d8e8d3;
+  color: #10110e;
+  padding: 15px 30px;
+}
+
+.nibgate-unlock-button:hover:not(:disabled),
+.nibgate-unlock-button:focus-visible:not(:disabled) {
+  border-color: rgba(17, 17, 17, 0.18);
+  background: var(--nib-olive);
+  box-shadow: var(--nib-shadow-2);
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.nibgate-status {
+  min-height: 28px;
+  margin: 18px 0 0;
+  color: var(--nib-page-muted);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.nibgate-premium-content {
+  margin-top: 28px;
+  border: 1px solid var(--nib-border-soft);
+  border-radius: var(--nib-radius-card);
+  background: var(--nib-soft);
+  padding: 24px;
+}
+
+.nibgate-premium-content strong {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--nib-page-fg);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: var(--nib-title-letter-spacing);
+  line-height: 1.1;
+}
+
+.nibgate-premium-content p {
+  margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+  .nibgate-demo-main { padding-top: 72px; }
+  h1 { font-size: clamp(64px, 8vw, 112px); }
+  .nibgate-unlock-card { padding: 42px; }
+}
+
+@media (max-width: 767px) {
+  .nibgate-demo-main {
+    padding: 36px 0 64px;
+  }
+
+  .nibgate-demo-main > * {
+    width: min(100% - 32px, 1380px);
+  }
+
+  .nibgate-unlock-card {
+    margin-top: 36px;
+    padding: 22px;
+  }
+
+  .nibgate-unlock-button {
+    font-size: 16px;
+  }
+
+  .nibgate-wallet-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .nibgate-wallet-actions,
+  .nibgate-wallet-button {
+    width: 100%;
+  }
+}
