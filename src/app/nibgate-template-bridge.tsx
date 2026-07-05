@@ -27,7 +27,11 @@ export default function NibgateTemplateBridge({ resource, accessPath, source }: 
       clearButton: '[data-nibgate-clear-proof]',
       walletLabel: '[data-nibgate-wallet-label]',
       status: '[data-nibgate-status]',
-      unlockedTarget: '[data-nibgate-premium]',
+      onUnlock: (result: any) => {
+        const proof = result?.unlockProof || result;
+        document.cookie = `nibgate_token_${resource.id}=${proof}; path=/; max-age=3600`;
+        window.location.reload();
+      },
     })
 
     return () => {
@@ -69,13 +73,6 @@ export default function NibgateTemplateBridge({ resource, accessPath, source }: 
         Unlock for {resource.price} {resource.currency || 'USDC'}
       </button>
       <p className="nibgate-status" data-nibgate-status></p>
-      <div className="nibgate-premium-content" data-nibgate-premium hidden>
-        <strong>Premium section unlocked</strong>
-        <p>
-          Agents can now read the structured metadata for this article, humans can read the protected section,
-          and the creator dashboard receives the unlock, earnings, and reputation signals.
-        </p>
-      </div>
     </section>
   )
 }
