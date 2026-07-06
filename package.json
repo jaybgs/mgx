@@ -15,6 +15,7 @@
     "@nibgate/sdk": "^0.1.2",
     "lucide-react": "^1.23.0",
     "next": "14.1.0",
+    "pg": "^8.22.0",
     "react": "^18",
     "react-dom": "^18",
     "style-to-object": "^2.0.1"
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/mdx": "^2.0.10",
     "@types/node": "^20",
+    "@types/pg": "^8.20.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
