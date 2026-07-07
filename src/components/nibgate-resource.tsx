@@ -40,8 +40,8 @@ export default async function NibgateResource({ children, id }: { children: Reac
     price: custom.price || '0.01',
     currency: 'USDC',
     recipient: resolvedRecipient,
-    path: `/${id}/`,
-    url: `${process.env.NIBGATE_SITE_ORIGIN || 'http://localhost:3000'}/${id}/`,
+    path: `/${post.slug}/`,
+    url: `${process.env.NIBGATE_SITE_ORIGIN || 'http://localhost:3000'}/api/nibgate/access?slug=${post.slug}`,
     access: { humans: 'paid', agents: 'paid' },
     unlock: { mode: 'one_time' }
   };

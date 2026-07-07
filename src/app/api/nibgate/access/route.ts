@@ -41,7 +41,7 @@ export async function GET(request: Request) {
     currency: 'USDC',
     recipient: resolvedRecipient,
     path: `/${post.slug}/`,
-    url: `${origin}/${post.slug}/`,
+    url: `${origin}/api/nibgate/access?slug=${post.slug}`,
     access: { humans: 'paid', agents: 'paid' },
     unlock: { mode: 'one_time' }
   };
