@@ -4,7 +4,9 @@ import { initDb, getSettings } from '../../../../lib/db';
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const origin = url.origin;
+  const host = request.headers.get('x-forwarded-host') || request.headers.get('host');
+  const proto = request.headers.get('x-forwarded-proto') || (url.protocol.replace(':', ''));
+  const origin = `${proto}://${host}`;
   
   const slug = url.searchParams.get('slug');
   if (!slug) {
