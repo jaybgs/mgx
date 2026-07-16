@@ -28,6 +28,7 @@ export default function NibgateTemplateBridge({ resource, accessPath, source }: 
       clearButton: '[data-nibgate-clear-proof]',
       walletLabel: '[data-nibgate-wallet-label]',
       status: '[data-nibgate-status]',
+      circleClientModuleUrl: 'https://esm.sh/@circle-fin/x402-batching@3/client',
       onUnlock: (result: any) => {
         const proof = result?.payload?.unlockProof || result?.unlockProof || (typeof result === 'string' ? result : '');
         document.cookie = `nibgate_token_${resource.id}=${proof}; path=/; max-age=3600`;
