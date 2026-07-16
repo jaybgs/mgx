@@ -27,7 +27,7 @@ export async function GET(request: Request) {
 
   const nibgate = createCircleGatewayServer({
     origin: origin,
-    secret: process.env.NIBGATE_SECRET || 'dev_secret',
+    secret: process.env.NIBGATE_SECRET || 'nibgate-dev-secret',
     network: process.env.NIBGATE_PAYMENT_NETWORK || 'eip155:5042002',
     recipient: resolvedRecipient
   });
